@@ -164,7 +164,7 @@ pub trait HostBus {
     /// Release a pipe created with `create_interrupt_pipe`
     ///
     /// After a pipe is released, the `pipe_ref` as well as the buffer used by the pipe can be re-used.
-    fn release_interrupt_pipe(&mut self, pipe_ref: u8);
+    fn release_interrupt_pipe(&mut self, pipe: InterruptPipe);
 
     /// Signal that a pipe can continue transfers
     ///

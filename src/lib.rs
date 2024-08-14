@@ -758,21 +758,21 @@ impl<B: HostBus> UsbHost<B> {
         size: u16,
         interval: u8,
     ) -> Option<PipeId> {
-        if let Some(bus::InterruptPipe { bus_ref, ptr }) = self
+        if let Some(pipe) = self
             .bus()
             .create_interrupt_pipe(dev_addr, ep_number, direction, size, interval)
         {
             if let Some((id, slot)) = self.alloc_pipe() {
                 slot.replace(Pipe::Interrupt {
                     dev_addr,
-                    bus_ref,
+                    bus_ref: pipe.bus_ref,
                     direction,
                     size,
-                    ptr,
+                    ptr: pipe.ptr,
                 });
                 Some(id)
             } else {
-                self.bus().release_interrupt_pipe(bus_ref);
+                self.bus().release_interrupt_pipe(pipe);
                 // the host has no more free pipe slots
                 None
             }
