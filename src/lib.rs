@@ -97,10 +97,8 @@ use defmt::Format;
 use discovery::DiscoveryState;
 use enumeration::EnumerationState;
 use types::{DeviceAddress, SetupPacket, TransferType};
-use usb_device::{
-    control::{Recipient, Request, RequestType},
-    UsbDirection,
-};
+use usb_device::control::{Recipient, Request, RequestType};
+pub use usb_device::UsbDirection;
 
 /// Maximum number of pipes that the host supports.
 const MAX_PIPES: usize = 32;
@@ -301,7 +299,7 @@ impl<B: HostBus> UsbHost<B> {
                         self.active_transfer = None;
                     }
                     Event::BusError(error)
-                },
+                }
                 bus::Event::InterruptPipe(buf_ref) => Event::InterruptPipe(buf_ref),
                 bus::Event::Sof => Event::Sof,
             }
@@ -673,7 +671,19 @@ impl<B: HostBus> UsbHost<B> {
         pipe_id: PipeId,
         recipient: Recipient,
     ) -> Result<(), ControlError> {
-        self.control_in(Some(dev_addr), Some(pipe_id), SetupPacket::new(UsbDirection::In, RequestType::Standard, recipient, Request::GET_STATUS, 0, 0, 2))
+        self.control_in(
+            Some(dev_addr),
+            Some(pipe_id),
+            SetupPacket::new(
+                UsbDirection::In,
+                RequestType::Standard,
+                recipient,
+                Request::GET_STATUS,
+                0,
+                0,
+                2,
+            ),
+        )
     }
 
     /// Initiate a `Set_Address` (0x05) control OUT transfer
@@ -748,7 +758,10 @@ impl<B: HostBus> UsbHost<B> {
         size: u16,
         interval: u8,
     ) -> Option<PipeId> {
-        if let Some(bus::InterruptPipe { bus_ref, ptr }) = self.bus().create_interrupt_pipe(dev_addr, ep_number, direction, size, interval) {
+        if let Some(bus::InterruptPipe { bus_ref, ptr }) = self
+            .bus()
+            .create_interrupt_pipe(dev_addr, ep_number, direction, size, interval)
+        {
             if let Some((id, slot)) = self.alloc_pipe() {
                 slot.replace(Pipe::Interrupt {
                     dev_addr,
