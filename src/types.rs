@@ -15,7 +15,7 @@ use usb_device::{
 ///
 /// This type only represents assigned addresses, and thus cannot represent the special address 0.
 /// Address 0 is only used to assign an address to the device during enumeration, and should not be used by any drivers.
-#[derive(Clone, Copy, PartialEq, Format)]
+#[derive(Clone, Copy, PartialEq, Debug, Format)]
 pub struct DeviceAddress(pub(crate) NonZeroU8);
 
 impl From<DeviceAddress> for u16 {

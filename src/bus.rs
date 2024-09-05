@@ -222,7 +222,7 @@ pub enum Event {
     Sof,
 }
 
-#[derive(Copy, Clone, Format, PartialEq)]
+#[derive(Copy, Clone, Debug, Format, PartialEq)]
 pub enum Error {
     /// CRC mismatch
     Crc,

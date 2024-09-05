@@ -79,7 +79,7 @@ impl PendingKbdDevice {
 /// Represents an input report, received from a keyboard
 ///
 /// The input report describes which keys are currently pressed.
-#[derive(Copy, Clone, defmt::Format)]
+#[derive(Copy, Clone, Debug, defmt::Format)]
 #[repr(packed)]
 pub struct InputReport {
     /// Status of modifier keys

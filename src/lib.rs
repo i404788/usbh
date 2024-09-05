@@ -153,6 +153,7 @@ pub enum Event {
 
 /// Result returned from `UsbHost::poll`.
 #[non_exhaustive]
+#[derive(Debug, Format)]
 pub enum PollResult {
     /// There is no device attached. It does not make sense to do anything else with the UsbHost instance, until a device was attached.
     NoDevice,
