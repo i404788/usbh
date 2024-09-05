@@ -361,7 +361,7 @@ impl<const MAX_DEVICES: usize> KbdDriver<MAX_DEVICES> {
     }
 }
 
-impl<B: HostBus> Driver<B> for KbdDriver {
+impl<B: HostBus, const MAX_DEVICES: usize> Driver<B> for KbdDriver<MAX_DEVICES> {
     fn attached(&mut self, device_address: DeviceAddress, _connection_speed: ConnectionSpeed) {
         if let Some(slot) = self.devices.iter_mut().find(|dev| dev.is_none()) {
             slot.replace(KbdDevice {
