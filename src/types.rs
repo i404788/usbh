@@ -71,7 +71,7 @@ impl Format for Bcd16 {
 }
 
 /// Refers to the speed at which a device operates
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub enum ConnectionSpeed {
     /// USB 1.0 low speed
     Low,

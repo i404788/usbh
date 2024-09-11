@@ -107,8 +107,8 @@ const MAX_PIPES: usize = 32;
 ///
 /// Currently the host can only handle a single port, with a single device.
 /// When that changes, this state will need to be split, to be per-host / per-port / per-device, as needed.
-#[derive(Copy, Clone)]
-enum State {
+#[derive(Copy, Clone, Debug)]
+pub enum State {
     /// Enumeration phase: starts in WaitForDevice state, ends with an address being assigned
     Enumeration(EnumerationState),
     /// Discovery phase: starts with an assigned address, ends with a configuration being chosen
@@ -246,6 +246,12 @@ impl<B: HostBus> UsbHost<B> {
             pipes: [None; MAX_PIPES],
         }
     }
+
+    /// Get current state of the USB Host for debugging purposes
+    pub fn get_state(&self) -> State {
+        self.state.clone()
+    }
+    
 
     /// Poll the USB host. This must be called reasonably often.
     ///

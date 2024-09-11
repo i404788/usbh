@@ -6,7 +6,7 @@ use crate::{Event, UsbHost};
 use usb_device::control::Recipient;
 use defmt::trace;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub enum DiscoveryState {
     // get device descriptor
     DeviceDesc,

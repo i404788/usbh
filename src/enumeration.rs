@@ -5,7 +5,7 @@ use crate::{Event, UsbHost};
 use defmt::{trace, Format};
 use usb_device::control::Recipient;
 
-#[derive(Copy, Clone, Format)]
+#[derive(Copy, Clone, Format, Debug)]
 pub enum EnumerationState {
     /// No device is attached yet
     WaitForDevice,
