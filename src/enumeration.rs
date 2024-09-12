@@ -1,4 +1,4 @@
-use crate::bus::HostBus;
+use crate::bus::{self, HostBus};
 use crate::descriptor;
 use crate::types::{ConnectionSpeed, DeviceAddress};
 use crate::{Event, UsbHost};
@@ -88,6 +88,21 @@ pub fn process_enumeration<B: HostBus>(
                 host.bus.interrupt_on_sof(false);
                 EnumerationState::WaitForDevice
             }
+            Event::BusError(bus::Error::RxTimeout) => {
+                // Retry
+                host.get_descriptor(
+                    None,
+                    None,
+                    Recipient::Device,
+                    descriptor::TYPE_DEVICE,
+                    0,
+                    8,
+                )
+                .ok()
+                .unwrap();
+                trace!("-> WaitDescriptor");
+                EnumerationState::WaitDescriptor
+            },
             Event::ControlInData(_, _) => {
                 trace!("-> Reset1");
                 host.bus.reset_bus();
