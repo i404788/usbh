@@ -192,7 +192,7 @@ pub enum KbdLed {
 }
 
 /// Error type for interactions with the driver
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub enum KbdError {
     /// Error initiating control transfer
     ControlError(ControlError),

@@ -122,7 +122,7 @@ pub enum State {
 }
 
 /// Error initiating a control transfer
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub enum ControlError {
     /// Indicates that the bus is currently busy with another transfer.
     ///
