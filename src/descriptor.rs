@@ -19,6 +19,16 @@ use crate::types::{Bcd16, TransferType};
 use defmt::Format;
 use usb_device::UsbDirection;
 
+
+#[repr(u8)]
+pub enum DescriptorTypes {
+    DEVICE = 1,
+    CONFIGURATION = 2,
+    STRING =  3,
+    INTERFACE = 4,
+    ENDPOINT = 5
+}
+
 /// [`descriptor_type`](Descriptor::descriptor_type) identifying a [`DeviceDescriptor`]
 pub const TYPE_DEVICE: u8 = 1;
 /// [`descriptor_type`](Descriptor::descriptor_type) identifying a [`ConfigurationDescriptor`]
@@ -211,7 +221,7 @@ pub struct InterfaceDescriptor {
 /// Each endpoint used for an interface has its own descriptor.
 ///
 /// This descriptor contains the information required by the host to determine the bandwidth requirements of each endpoint.
-#[derive(Format)]
+#[derive(Format, Clone)]
 pub struct EndpointDescriptor {
     /// The address of the endpoint on the USB device described by this descriptor.
     pub address: EndpointAddress,

@@ -19,7 +19,7 @@ pub struct SimpleDetector<
 }
 
 impl<
-        const CLASS_CODE: u8,
+    const CLASS_CODE: u8,
     const SUB_CLASS_CODE: u8,
     const EP_DIRECTION: u8,
     const EP_TYPE: u8,
